@@ -11,14 +11,14 @@ import { Icon } from './icon';
 import { SearchHistoryDropdown, useSearchHistory } from './search-history';
 import { cn } from '@/lib/utils';
 
-/** 顶部导航：Logo、搜索框（首页外）、历史、设置 */
+/** é¡¶é¨å¯¼èªï¼Logoãæç´¢æ¡ï¼é¦é¡µå¤ï¼ãåå²ãè®¾ç½® */
 export function Header({ showSearch = false }: { showSearch?: boolean }) {
   const router = useRouter();
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [query, setQuery] = useState('');
-  // 与首页搜索框共用同一套「最近搜索」下拉逻辑
+  // ä¸é¦é¡µæç´¢æ¡å±ç¨åä¸å¥ãæè¿æç´¢ãä¸æé»è¾
   const searchHistory = useSearchHistory(query);
 
   const submitSearch = (text: string) => {
@@ -26,7 +26,7 @@ export function Header({ showSearch = false }: { showSearch?: boolean }) {
     if (!q) return;
     searchHistory.close();
     router.push(`/?s=${encodeURIComponent(q)}`, { scroll: false });
-    // 顶栏搜索一并写入最近搜索（此前只有首页会记录）
+    // é¡¶æ æç´¢ä¸å¹¶åå¥æè¿æç´¢ï¼æ­¤ååªæé¦é¡µä¼è®°å½ï¼
     searchHistory.record(q);
   };
 
@@ -39,7 +39,7 @@ export function Header({ showSearch = false }: { showSearch?: boolean }) {
     <>
       <header className="sticky top-0 z-40 bg-surface/90 backdrop-blur border-b border-line">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-3">
-          <Link href="/" aria-label="LibreTV 首页" className="flex items-center shrink-0">
+          <Link href="/" aria-label="LibreTV é¦é¡µ" className="flex items-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/icon-512.png" alt="LibreTV" className="w-7 h-7 rounded-lg" />
           </Link>
@@ -56,12 +56,12 @@ export function Header({ showSearch = false }: { showSearch?: boolean }) {
                 <input
                   className={cn(
                     'input w-full h-9',
-                    // 展开时：上圆角与外框沿用聚焦样式，底边改为内部分隔线，与下拉拼成同一面板
+                    // å±å¼æ¶ï¼ä¸åè§ä¸å¤æ¡æ²¿ç¨èç¦æ ·å¼ï¼åºè¾¹æ¹ä¸ºåé¨åéçº¿ï¼ä¸ä¸ææ¼æåä¸é¢æ¿
                     searchHistory.visible &&
                       'rounded-b-none border-accent border-b-line bg-surface-raised focus-visible:ring-0'
                   )}
-                  aria-label="搜索影片"
-                  placeholder="搜索影片..."
+                  aria-label="æç´¢å½±ç"
+                  placeholder="æç´¢å½±ç..."
                   value={query}
                   maxLength={100}
                   onChange={(e) => {
@@ -97,20 +97,17 @@ export function Header({ showSearch = false }: { showSearch?: boolean }) {
           <div className="flex-1 sm:hidden" />
 
           <nav className="flex items-center gap-1 ml-auto">
-            <HeaderLink href="/live" active={pathname === '/live'}>
-              直播
-            </HeaderLink>
             <HeaderLink href="/about" active={pathname === '/about'}>
-              关于
+              å³äº
             </HeaderLink>
             <ThemeToggle />
-            <IconButton label="观看历史" onClick={() => setHistoryOpen(true)}>
+            <IconButton label="è§çåå²" onClick={() => setHistoryOpen(true)}>
               <Icon name="clock" />
             </IconButton>
-            <IconButton label="下载管理" onClick={requestShowDownloadManager}>
+            <IconButton label="ä¸è½½ç®¡ç" onClick={requestShowDownloadManager}>
               <Icon name="download" />
             </IconButton>
-            <IconButton label="设置" onClick={() => setSettingsOpen(true)}>
+            <IconButton label="è®¾ç½®" onClick={() => setSettingsOpen(true)}>
               <Icon name="gear" />
             </IconButton>
           </nav>
