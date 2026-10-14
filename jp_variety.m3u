@@ -1,0 +1,9 @@
+#EXTM3U
+#EXTINF:-1 tvg-name="NHK総合" tvg-id="NHK.jp" group-title="日本综艺",NHK総合
+https://nhk4.mov3.co/hls/nhk.m3u8
+#EXTINF:-1 tvg-name="フジテレビ" tvg-id="Fuji.jp" group-title="日本综艺",フジテレビ
+https://fujitv4.mov3.co/hls/fujitv.m3u8
+#EXTINF:-1 tvg-name="テレビ東京" tvg-id="TX.jp" group-title="日本综艺",テレビ東京
+https://tvtokyo.mov3.co/hls/tvtokyo.m3u8
+#EXTINF:-1 tvg-name="NHK Eテレ" tvg-id="ETV.jp" group-title="日本综艺",NHK Eテレ
+https://naori-test.netgenx.site/pxx.php?shk_cid=hdgd02#.m3u8
