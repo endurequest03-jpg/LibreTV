@@ -1,7 +1,6 @@
 {
   "urls": [
     {"name": "蛋蛋电影", "url": "https://www.ddmf.net/api.php/provide/vod/?ac=list"},
-    {"name": "蘑菇资源", "url": "https://www.moguyy.com/api.php/provide/vod/?ac=list"},
-    {"name": "飞速资源", "url": "https://www.feisuzy.com/api.php/provide/vod/?ac=list"}
+    {"name": "极速资源", "url": "https://www.jisuzy.com/api.php/provide/vod/?ac=list"}
   ]
 }
