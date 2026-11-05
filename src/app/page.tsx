@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Header } from '@/components/header';
 import { RecommendSection } from '@/components/douban-section';
 import { DetailModal } from '@/components/detail-modal';
-import { AggregatedCard, aggregateResults } from '@/components/video-card';
+import { AggregatedCard, FailedSourceCard, aggregateResults } from '@/components/video-card';
 import { useAppStore, resolveSource, isInDisabledSubscription, isSourceDisabled } from '@/lib/store';
 import { api } from '@/lib/client-api';
 import type { SearchResultItem, SourceSearchOutcome } from '@/lib/types';
@@ -328,7 +328,7 @@ function HomeContent() {
 
             {selectedSources.length === 0 ? (
               <NoSourceGuide hasSources={customAPIs.length > 0 || envSources.length > 0} />
-            ) : list.length > 0 ? (
+            ) : list.length > 0 || failures.length > 0 ? (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-start">
                   {visibleGroups.map((group) => (
@@ -336,6 +336,14 @@ function HomeContent() {
                       key={group.key}
                       group={group}
                       onOpen={(item) => setDetailItem(item)}
+                    />
+                  ))}
+                  {failures.map((f) => (
+                    <FailedSourceCard
+                      key={f.sourceKey}
+                      sourceName={sourceName(f.sourceKey)}
+                      error={f.error}
+                      timedOut={f.timedOut}
                     />
                   ))}
                 </div>
