@@ -583,6 +583,7 @@ function PlaybackPanel() {
 /** 片段缓存：开启/关闭 + 用量展示 + 清理（数据在浏览器本地，独立于配置导出） */
 function VideoCachePanel() {
   const [enabled, setEnabled] = useState(() => loadCacheSettings().enabled);
+  const [clearOnClose, setClearOnClose] = useState(() => loadCacheSettings().clearOnClose);
   const [summary, setSummary] = useState<CacheSummary>({ segments: 0, bytes: 0, episodes: 0 });
   const [clearing, setClearing] = useState(false);
 
@@ -609,6 +610,15 @@ function VideoCachePanel() {
         onChange={(v) => {
           const next = saveCacheSettings({ enabled: v });
           setEnabled(next.enabled);
+        }}
+      />
+      <ToggleRow
+        label="退出时自动清理缓存"
+        description="关闭页面或切到后台时自动清空已缓存的分片；关闭此开关后分片会保留到下次手动清理"
+        checked={clearOnClose}
+        onChange={(v) => {
+          const next = saveCacheSettings({ clearOnClose: v });
+          setClearOnClose(next.clearOnClose);
         }}
       />
       <div className="flex items-center justify-between text-xs text-faint">
