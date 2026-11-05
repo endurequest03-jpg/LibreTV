@@ -262,6 +262,53 @@ export function VideoCard({ item, onClick }: { item: SearchResultItem; onClick: 
   );
 }
 
+/** 失败源卡片：请求失败/超时的源以灰色卡片展示在结果区，标注失败原因，不可点击 */
+export function FailedSourceCard({
+  sourceName,
+  error,
+  timedOut,
+}: {
+  sourceName: string;
+  error: string;
+  timedOut?: boolean;
+}) {
+  return (
+    <div className="card opacity-75" aria-label={`点播源 ${sourceName} 请求失败`}>
+      <div className="flex h-full">
+        <div className="relative flex-shrink-0 w-[105px] sm:w-[120px] aspect-[2/3] bg-chip flex items-center justify-center">
+          {timedOut ? (
+            <svg className="w-8 h-8 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <circle cx="12" cy="12" r="9" strokeWidth={1.5} />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 7v5l3 2" />
+            </svg>
+          ) : (
+            <svg className="w-8 h-8 text-faint" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.36 6.64a9 9 0 11-12.73 0M12 8v4m0 4h.01" />
+            </svg>
+          )}
+        </div>
+
+        <div className="p-2.5 flex flex-col flex-grow min-w-0">
+          <div className="flex-grow">
+            <h3 className="font-semibold text-sm text-content mb-1.5 line-clamp-2" title={sourceName}>
+              {sourceName}
+            </h3>
+            <p className="text-xs text-muted line-clamp-2 mb-2" title={error}>
+              {error || '请求失败'}
+            </p>
+          </div>
+          <div className="flex items-center justify-between mt-auto pt-1.5 border-t border-line">
+            <span className="tag bg-chip text-muted truncate max-w-[80%]">
+              {timedOut ? '请求超时' : '请求失败'}
+            </span>
+            <span className={timedOut ? 'text-warning' : 'text-faint'}>{timedOut ? '⏱' : '✗'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** 豆瓣推荐卡片（无来源徽章，点击直接搜索） */
 export function DoubanCard({ item, onClick }: { item: { title: string; cover: string; rating?: string }; onClick: () => void }) {
   const imageProxyMode = useAppStore((s) => s.imageProxyMode);
