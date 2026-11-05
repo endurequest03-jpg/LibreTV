@@ -9,6 +9,7 @@ import { GlobalDownloadManager } from './download-manager';
 import { useAppStore, hydrateLiveProbeResults } from '@/lib/store';
 import { api, STATUS_QUERY_KEY } from '@/lib/client-api';
 import { applyEnvPresets } from '@/lib/subscription-sync';
+import { clearVideoCache, loadCacheSettings } from '@/lib/video-cache';
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -42,6 +43,22 @@ export function Providers({ children }: { children: ReactNode }) {
       })
       .catch(() => {});
   }, [queryClient]);
+
+  // 关闭页面 / 切到后台时按设置自动清空分片缓存（清理幂等，重复触发无害）
+  useEffect(() => {
+    const autoClear = () => {
+      if (loadCacheSettings().clearOnClose) void clearVideoCache();
+    };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') autoClear();
+    };
+    window.addEventListener('pagehide', autoClear);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      window.removeEventListener('pagehide', autoClear);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
